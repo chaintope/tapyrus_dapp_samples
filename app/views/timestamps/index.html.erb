@@ -1,0 +1,37 @@
+<!-- Section: Timestamp List -->
+<section class="mb-4">
+  <div class="card">
+    <div class="card-header text-center py-3">
+      <h5 class="mb-0 text-center">
+        <strong>Timestamp List</strong>
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover text-nowrap">
+          <thead>
+          <tr>
+            <th scope="col">Transaction id</th>
+            <th scope="col">Content Hash</th>
+            <th scope="col">Wallet ID</th>
+            <th scope="col">Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @timestamps.each do |t| %>
+          <tr>
+            <th scope="row"><span class="<%= t[:status] == 'confirmed' ? '': 'text-warning' %>"><%= t[:txid] %></span></th>
+            <td><%= t[:content_hash] %></td>
+            <td><%= t[:wallet_id] %></td>
+            <td><%= t[:status] %></td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <%= paginate @timestamps %>
+</section>
+<!-- Section: Timestamp List -->

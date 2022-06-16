@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Workshop202207</title>
+    <title>B3 2022</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,75 @@
   </head>
 
   <body>
-    <%= yield %>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar brand -->
+          <a class="navbar-brand mt-2 mt-lg-0" href="<%= root_url %>">
+            <img
+              src="<%= asset_path('tapyrus-logo2.png') %>"
+              height="48"
+              alt=""
+              loading="lazy"
+              />
+          </a>
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="<%= timestamps_url %>">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="<%= timestamps_url %>">Timestamp</a>
+            </li>
+          </ul>
+          <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+        </div>
+        <!-- Right elements -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+
+    <% flash.each do |key, message| %>
+      <div class="alert <%= flash_class(key) %> alert-dismissible fade show" role="alert">
+        <% if message.is_a?(Array) %>
+          <ul>
+            <% message.each do |m| %>
+            <li><%= m %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <%= message %>
+        <% end %>
+        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+
+    <main style="margin-top: 58px">
+      <div class="container pt-4">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>
