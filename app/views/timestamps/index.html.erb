@@ -11,19 +11,17 @@
         <table class="table table-hover text-nowrap">
           <thead>
           <tr>
+            <th scope="col">Primary Key</th>
             <th scope="col">Transaction id</th>
             <th scope="col">Content Hash</th>
-            <th scope="col">Wallet ID</th>
-            <th scope="col">Status</th>
           </tr>
           </thead>
           <tbody>
           <% @timestamps.each do |t| %>
-          <tr>
-            <th scope="row"><span class="<%= t[:status] == 'confirmed' ? '': 'text-warning' %>"><%= t[:txid] %></span></th>
+          <tr class="<%= t[:status] == "confirmed" ? '' : 'bg-warning' %>">
+            <td><%= link_to t[:id], timestamp_path(t[:id]) %></td>
+            <th scope="row"><span><%= t[:txid] %></span></th>
             <td><%= t[:content_hash] %></td>
-            <td><%= t[:wallet_id] %></td>
-            <td><%= t[:status] %></td>
           </tr>
           <% end %>
           </tbody>

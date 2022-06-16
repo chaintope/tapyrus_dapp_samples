@@ -1,0 +1,71 @@
+<!-- Section: Timestamp -->
+<section class="mb-4">
+  <div class="card">
+    <div class="card-header text-center py-3">
+      <h5 class="mb-0 text-center">
+        <strong>Timestamp #<%= @timestamp[:id] %></strong>
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover text-nowrap">
+          <tbody>
+            <tr>
+              <th scope="col">Id</th>
+              <td scope="col"><%= @timestamp[:id] %></td>
+            </tr>
+            <tr>
+              <th scope="col">Txid</th>
+              <td scope="col"><%= @timestamp[:txid] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Content</th>
+              <td scope="col"><%= @timestamp[:content_hash] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Status</th>
+              <td scope="col"><%= @timestamp[:status] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Prefix</th>
+              <td scope="col"><%= @timestamp[:prefix] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Wallet Id</th>
+              <td scope="col"><%= @timestamp[:wallet_id] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Latest</th>
+              <td scope="col"><%= @timestamp[:latest] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Timestamp Type</th>
+              <td scope="col"><%= @timestamp[:timestamp_type] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Block Height</th>
+              <td scope="col"><%= @timestamp[:block_height] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Block Time</th>
+              <td scope="col"><%= @timestamp[:block_time] %></th>
+            </tr>
+            <tr>
+              <th scope="col">P2C Address</th>
+              <td scope="col"><%= @timestamp[:p2c_address] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Payment Base</th>
+              <td scope="col"><%= @timestamp[:payment_base] %></th>
+            </tr>
+            <tr>
+              <th scope="col">Prev Id</th>
+              <td scope="col"><%= @timestamp[:prev_id] %></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section: Timestamp -->
