@@ -1,0 +1,33 @@
+<!-- Section: Userinfo -->
+<section class="mb-4">
+  <div class="card">
+    <div class="card-header text-center py-3">
+      <h5 class="mb-0 text-center">
+        <strong>User Info</strong>
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover text-nowrap">
+          <tbody>
+            <tr>
+              <th scope="col">User id</th>
+              <td scope="col"><%= @userinfo[:sub] %></td>
+            </tr>
+            <tr>
+              <th scope="col">Addresses</th>
+              <td scope="col"><%= @userinfo[:addresses].first %></th>
+            </tr>
+            <% @userinfo[:addresses][1..-1].each do |address| %>
+              <tr>
+                <th scope="col"></th>
+                <td scope="col"><%= address %></th>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Section: Userinfo -->
