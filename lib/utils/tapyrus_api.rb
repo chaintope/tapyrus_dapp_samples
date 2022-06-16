@@ -1,7 +1,19 @@
 class TapyrusApi
   include Singleton
 
+  class FileNotFound < StandardError; end
+  class EndpointNotFound < StandardError; end
+
   class << self
+    def get_userinfo(confirmation_only = true)
+      res = instance.connection.get("userinfo") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.params['confirmation_only'] = confirmation_only
+      end
+
+      res.body
+    end
+
     def get_timestamps
       res = instance.connection.get("timestamps") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
@@ -34,6 +46,7 @@ class TapyrusApi
   def initialize
     load_access_token
     load_endpoint
+    raise TapyrusApi::EndpointNotFound, "接続先URLが正しくありません" if URI::DEFAULT_PARSER.make_regexp.match(@endpoint).blank?
     @connection ||= Faraday.new(@endpoint) do |builder|
       builder.response :raise_error
       builder.response :json, parser_options: { symbolize_names: true }, content_type: 'application/json'
@@ -64,10 +77,16 @@ class TapyrusApi
 
   def client_cert
     OpenSSL::X509::Certificate.new File.read(client_pem_path)
+  rescue Errno::ENOENT => e
+    Rails.logger.error(e)
+    raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
   def client_key
     OpenSSL::PKey.read File.read(client_pem_path)
+  rescue Errno::ENOENT => e
+    Rails.logger.error(e)
+    raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
   def client_pem_path
