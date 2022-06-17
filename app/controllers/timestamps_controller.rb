@@ -8,14 +8,20 @@ class TimestampsController < ApplicationController
   end
 
   def new
+    @form = Timestamp::Form.new
   end
 
   def create
-    response = TapyrusApi.post_timestamp(content: create_params[:content], digest: :sha256, prefix: create_params[:prefix], type: :simple)
-    if response.present?
-      redirect_to timestamp_path(response[:id]), notice: 'Timestampを作成しました'
+    @form = Timestamp::Form.new(create_params)
+    if @form.validate
+      response = TapyrusApi.post_timestamp(content: create_params[:content], digest: :sha256, prefix: create_params[:prefix], type: :simple)
+      if response.present?
+        redirect_to timestamp_path(response[:id]), notice: 'Timestampを作成しました'
+      else
+        redirect_to timestamps_path, notice: 'Timestampを作成しました'
+      end
     else
-      redirect_to timestamps_path, notice: 'Timestampを作成しました'
+      render :new
     end
   rescue StandardError, RuntimeError => e
     Rails.logger.error(e)

@@ -8,7 +8,7 @@
       <div class="container">
 
         <div class="row mt-2">
-        <%= form_with scope: "timestamp", :url => timestamps_path, :html => {:class => ''} do |f| %>
+        <%= form_with model: @form, scope: "timestamp", :url => timestamps_path, :html => {:class => ''} do |f| %>
           <!-- 支払い先アドレスとTPCを入力するフォームを表示 -->
           <div class="row mt-2">
             <div class="form-floating mb-3">
