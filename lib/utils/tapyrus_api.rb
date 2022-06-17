@@ -52,7 +52,7 @@ class TapyrusApi
     end
 
     def post_timestamp(content:, digest:, prefix:, type:)
-      res ||= instance.connection.post("timestamps") do |req|
+      res = instance.connection.post("timestamps") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
         req.headers['Content-Type'] = 'application/json'
         req.body = JSON.generate({ "content" => content, "digest" => digest, "prefix" => prefix, "type" => type })
