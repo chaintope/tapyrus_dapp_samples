@@ -13,6 +13,10 @@ class TokensController < ApplicationController
       response = TapyrusApi.post_tokens_issue(amount: @form.amount, token_type: @form.token_type, split: @form.split)
       if response.present?
         redirect_to tokens_path, notice: 'Tokenを作成しました。反映されるまでしばらく時間がかかります。'
+      else
+        Rails.logger.error("response=#{response}")
+        flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
+        render :new
       end
     else
       render :new
