@@ -31,3 +31,8 @@
 /config/master.key
 
 vendor/bundle
+
+# TapyrusAPI credentials
+access_token.txt
+endpoint.txt
+tapyrus_api_client.pem
