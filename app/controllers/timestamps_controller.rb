@@ -14,11 +14,11 @@ class TimestampsController < ApplicationController
   def create
     @form = Timestamp::Form.new(create_params)
     if @form.validate
-      response = TapyrusApi.post_timestamp(content: @form.content, digest: :sha256, prefix: @form.prefix, type: :simple)
-      if response.present?
-        redirect_to timestamp_path(response[:id]), notice: 'Timestampを作成しました'
+      res = TapyrusApi.post_timestamp(content: @form.content, digest: :sha256, prefix: @form.prefix, type: :simple)
+      if res.present?
+        redirect_to timestamp_path(res[:id]), notice: 'Timestampを作成しました'
       else
-        Rails.logger.error("#{self.class.name}##{__method__} response=#{response}")
+        Rails.logger.error("#{self.class.name}##{__method__} res=#{res}")
         flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
         render :new
       end
