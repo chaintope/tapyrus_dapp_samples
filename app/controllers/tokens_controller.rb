@@ -14,7 +14,7 @@ class TokensController < ApplicationController
       if response.present?
         redirect_to tokens_path, notice: 'Tokenを作成しました。反映されるまでしばらく時間がかかります。'
       else
-        Rails.logger.error("response=#{response}")
+        Rails.logger.error("#{self.class.name}##{__method__} response=#{response}")
         flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
         render :new
       end

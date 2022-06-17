@@ -18,7 +18,7 @@ class TimestampsController < ApplicationController
       if response.present?
         redirect_to timestamp_path(response[:id]), notice: 'Timestampを作成しました'
       else
-        Rails.logger.error("response=#{response}")
+        Rails.logger.error("#{self.class.name}##{__method__} response=#{response}")
         flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
         render :new
       end
