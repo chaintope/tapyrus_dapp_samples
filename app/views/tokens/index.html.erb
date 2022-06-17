@@ -1,0 +1,33 @@
+<!-- Section: Token List -->
+<section class="mb-4">
+  <div class="card">
+    <div class="card-header text-center py-3">
+      <h5 class="mb-0 text-center">
+        <strong>Token List</strong>
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover text-nowrap">
+          <thead>
+          <tr>
+            <th scope="col">Token Id</th>
+            <th scope="col">Amount</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @tokens.each do |t| %>
+          <tr>
+            <th scope="row"><span><%= t[:token_id] %></span></th>
+            <td><%= t[:amount] %></td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <%= paginate @tokens %>
+</section>
+<!-- Section: Token List -->
