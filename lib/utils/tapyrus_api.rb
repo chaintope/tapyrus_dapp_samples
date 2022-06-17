@@ -5,6 +5,27 @@ class TapyrusApi
   class EndpointNotFound < StandardError; end
 
   class << self
+    def get_addresses(per: 25, page: 1, purpose: "general")
+      res = instance.connection.get("addresses") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.params['per'] = per
+        req.params['page'] = page
+        req.params['purpose'] = purpose
+      end
+
+      res.body
+    end
+
+    def post_addresses(purpose: "general")
+      res = instance.connection.post("addresses") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = JSON.generate({ "purpose" => purpose })
+      end
+
+      res.body
+    end
+
     def get_userinfo(confirmation_only = true)
       res = instance.connection.get("userinfo") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
