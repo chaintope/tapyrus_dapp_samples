@@ -60,6 +60,45 @@ class TapyrusApi
 
       res.body
     end
+
+    def get_tokens(confirmation_only = true)
+      res = instance.connection.get("tokens") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.params['confirmation_only'] = confirmation_only
+      end
+
+      res.body
+    end
+
+    def post_tokens_issue(amount:, token_type: 1, split: 1)
+      res = instance.connection.post("tokens/issue") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
+      end
+
+      res.body
+    end
+
+    def post_tokens_reissue(token_id, amount:, split: 1)
+      res = instance.connection.post("tokens/#{token_id}/reissue") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = JSON.generate({ "amount" => amount, "split" => split })
+      end
+
+      res.body
+    end
+
+    def put_tokens_transfer(token_id, address:, amount:)
+      res = instance.connection.put("tokens/#{token_id}/transfer") do |req|
+        req.headers['Authorization'] = "Bearer #{instance.access_token}"
+        req.headers['Content-Type'] = 'application/json'
+        req.body = JSON.generate({ "address" => address, "amount" => amount })
+      end
+
+      res.body
+    end
   end
 
   attr_reader :connection, :access_token, :endpoint
