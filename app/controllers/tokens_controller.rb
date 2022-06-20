@@ -4,7 +4,12 @@ class TokensController < ApplicationController
   end
 
   def new
-    @form = Token::Form.new
+    if request.fullpath.split('/').last == 'transfer'
+      @form = Token::TransferForm.new
+      return render :transfer
+    else
+      @form = Token::Form.new
+    end
   end
 
   def create
@@ -27,9 +32,34 @@ class TokensController < ApplicationController
     render :new
   end
 
+  def transfer
+    @form = Token::TransferForm.new(transfer_params)
+
+    if @form.validate
+      res = TapyrusApi.put_tokens_transfer(@form.token_id, address: @form.address, amount: @form.amount)
+      if res.present?
+        redirect_to tokens_path, notice: 'Tokenを送付しました。'
+      else
+        Rails.logger.error("#{self.class.name}##{__method__} res=#{res}")
+        flash.now[:alert] = 'TapyrusAPIの接続で障害が発生しました'
+        render :transfer
+      end
+    else
+      render :transfer
+    end
+  rescue StandardError, RuntimeError => e
+    Rails.logger.error(e)
+    flash.now[:alert] = 'Tokenの送付に失敗しました'
+    render :transfer
+  end
+
   private
 
   def create_params
     params.require(:token).permit(:amount, :token_type, :split)
+  end
+
+  def transfer_params
+    params.require(:token).permit(:token_id, :address, :amount)
   end
 end
