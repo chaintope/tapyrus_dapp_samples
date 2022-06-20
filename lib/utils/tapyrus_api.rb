@@ -9,98 +9,39 @@ class TapyrusApi
 
   class << self
     def get_addresses(per: 25, page: 1, purpose: "general")
-      res = instance.connection.get("/api/v1/addresses") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.params['per'] = per
-        req.params['page'] = page
-        req.params['purpose'] = purpose
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def post_addresses(purpose: "general")
-      res = instance.connection.post("/api/v1/addresses") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = JSON.generate({ "purpose" => purpose })
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def get_userinfo(confirmation_only = true)
-      res = instance.connection.get("/api/v1/userinfo") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.params['confirmation_only'] = confirmation_only
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def get_timestamps
-      res = instance.connection.get("/api/v1/timestamps") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def get_timestamp(id)
-      res = instance.connection.get("/api/v1/timestamps/#{id}") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def post_timestamp(content:, digest:, prefix:, type:)
-      res = instance.connection.post("/api/v1/timestamps") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = JSON.generate({ "content" => content, "digest" => digest, "prefix" => prefix, "type" => type })
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def get_tokens(confirmation_only = true)
-      res = instance.connection.get("/api/v1/tokens") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.params['confirmation_only'] = confirmation_only
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def post_tokens_issue(amount:, token_type: 1, split: 1)
-      res = instance.connection.post("/api/v1/tokens/issue") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
-      end
-
-      res.body
-    end
-
-    def post_tokens_reissue(token_id, amount:, split: 1)
-      res = instance.connection.post("/api/v1/tokens/#{token_id}/reissue") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = JSON.generate({ "amount" => amount, "split" => split })
-      end
-
-      res.body
+      # ワークで実装
     end
 
     def put_tokens_transfer(token_id, address:, amount:)
-      res = instance.connection.put("/api/v1/tokens/#{token_id}/transfer") do |req|
-        req.headers['Authorization'] = "Bearer #{instance.access_token}"
-        req.headers['Content-Type'] = 'application/json'
-        req.body = JSON.generate({ "address" => address, "amount" => amount })
-      end
-
-      res.body
+      # ワークで実装
     end
   end
 
