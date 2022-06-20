@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   rescue_from Faraday::UnauthorizedError, with: :render_unauthorized
   rescue_from TapyrusApi::FileNotFound, with: :render_unauthorized
-  rescue_from TapyrusApi::EndpointNotFound, with: :render_not_found
+  rescue_from TapyrusApi::UrlNotFound, with: :render_not_found
 
   private
 
