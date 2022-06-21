@@ -236,3 +236,7 @@ http://localhost:3000/tokens にアクセスして確認してみましょう。
 自分で作成したトークン以外のトークンが表示されましたか？
 
 以上でトークンの送付と確認のワークは終了になります。
+
+## Addtional Task
+
+[web-ui-timestamp](https://github.com/chaintope/workshop202207/tree/web-ui-timestamp) ブランチをチェックアウトしてタイムスタンプの表示と記録を実装してみよう。
