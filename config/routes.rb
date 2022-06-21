@@ -7,5 +7,6 @@ Rails.application.routes.draw do
       post :transfer
     end
   end
+  resources :wallets, only: [:index, :create]
   root "home#index"
 end
