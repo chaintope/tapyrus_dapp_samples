@@ -32,6 +32,10 @@ Google ドライブで共有する `tapyrus_api_client.pem` を `workshop202207`
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
 
+### 1.3. TapyrusAPI エンドポイント
+
+`lib/utils/tapyrus_api.rb` の `@url = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を書いてください。
+
 ## 2. Web App を起動する
 
 Docker で用意された環境を起動します。
