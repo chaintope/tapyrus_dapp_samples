@@ -48,7 +48,7 @@ Docker で用意された環境を起動します。
 以下のコマンドを実行しデータベースを作成します。
 
 ```
-docker compose run --rm web db:create db:migrate
+docker compose run --rm web db:create
 ```
 
 ### 2.2. アプリケーションを起動する
