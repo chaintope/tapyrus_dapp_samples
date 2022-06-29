@@ -34,7 +34,7 @@ TapyrusAPI のクライアント証明書は API 利用のための認証情報�
 
 ### 1.3. TapyrusAPI エンドポイント
 
-`lib/utils/tapyrus_api.rb` の `@url = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を書いてください。
+`lib/utils/tapyrus_api.rb` の 131行目にある `@url = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を書いてください。
 
 ## 2. 実行環境を起動する
 
@@ -45,19 +45,27 @@ Docker で用意された環境を起動します。
 初回起動時はデータベースがないため作成する必要があります。
 以下のコマンドを実行しデータベースを作成します。
 
+workshop202207フォルダに移動して、以下のコマンドを実行してください。
+
 ```
-docker compose run --rm web db:create
+docker compose run --rm web bin/rails db:create
 ```
 
 ### 2.2. アプリケーションを起動する
 
+workshop202207フォルダに移動して、以下のコマンドを実行してください。
+
 ```
-docker compose up -d --build
+docker compose up --build
 ```
+
+アプリケーションを起動すると、そのターミナル上にはアプリケーションのログが表示されます。
+
+以降の作業でコマンドを実行する場合は新しいターミナルを起動して実行してください。
 
 ### 2.3. Docker コンテナとデータベースを削除する
 
-Docker にまつわるデータを削除できます。
+Dockerコンテナで作成されたデータを削除できます。
 
 TapyrusAPI を使ってブロックチェーンに書き込んだトランザクションは消えません。
 
@@ -73,7 +81,7 @@ docker compose down -v --remove-orphans
 
 Rake タスクを実行して TapyrusAPI を実行してみましょう。
 
-1. ウォレット(アドレス)を作成する
+1. アドレスを作成する
 
 ```bash
 docker compose exec web bin/rails api:post_addresses
