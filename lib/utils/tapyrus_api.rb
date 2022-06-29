@@ -1,3 +1,6 @@
+# ワークで実装
+TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
+
 class TapyrusApi
   include Singleton
 
@@ -82,7 +85,8 @@ class TapyrusApi
 
   def initialize
     load_access_token
-    load_url
+    @url = TAPYRUS_API_ENDPOINT_URL
+
     raise TapyrusApi::UrlNotFound, "接続先URLが正しくありません" if URI::DEFAULT_PARSER.make_regexp.match(@url).blank?
     @connection ||= Faraday.new(@url) do |builder|
       builder.response :raise_error
@@ -101,11 +105,6 @@ class TapyrusApi
       Rails.logger.warn("Not Found Access Token")
       @access_token = nil
     end
-  end
-
-  def load_url
-    # ワークで実装
-    @url = "ここにURLを記入してください"
   end
 
   def client_cert
