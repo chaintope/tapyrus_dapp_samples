@@ -1,5 +1,5 @@
 # ワークで実装
-TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
+TAPYRUS_API_ENDPOINT_URL = "https://p4h2xize.api.tapyrus.chaintope.com"
 
 class TapyrusApi
   include Singleton
@@ -20,7 +20,19 @@ class TapyrusApi
     end
 
     def post_addresses(purpose: "general")
-      # ワークで実装
+      # ワーク2.で実装
+    end
+
+    def post_tokens_issue(amount:, token_type: 1, split: 1)
+      # ワーク3.で実装
+    end
+
+    def put_tokens_transfer(token_id, address:, amount:)
+      # ワーク4.で実装
+    end
+
+    def get_tokens(confirmation_only = true)
+      # ワーク5.で実装
     end
 
     def get_userinfo(confirmation_only = true)
@@ -58,14 +70,6 @@ class TapyrusApi
       res.body
     end
 
-    def get_tokens(confirmation_only = true)
-      # ワークで実装
-    end
-
-    def post_tokens_issue(amount:, token_type: 1, split: 1)
-      # ワークで実装
-    end
-
     def post_tokens_reissue(token_id, amount:, split: 1)
       res = instance.connection.post("/api/v1/tokens/#{token_id}/reissue") do |req|
         req.headers['Authorization'] = "Bearer #{instance.access_token}"
@@ -74,10 +78,6 @@ class TapyrusApi
       end
 
       res.body
-    end
-
-    def put_tokens_transfer(token_id, address:, amount:)
-      # ワークで実装
     end
   end
 
