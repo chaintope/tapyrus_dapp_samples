@@ -78,9 +78,10 @@ docker compose down -v --remove-orphans
 トークンの新規発行は TapyrusAPI を使うことで簡単に行えます。
 
 まずは、トークンの新規発行 API を実装しましょう。
-`lib/utils/tapyrus_api.rb` の `post_tokens_issue` メソッドを実装しましょう。
+`TapyruApi` クラスの実装は `lib/utils/tapyrus_api.rb` で定義されています。
+しかし、 `TapyrusApi` クラスの `post_tokens_issue` メソッドは中身がありませんので、以下の通り実装することで、TapyrusAPI のトークンの新規発行 API を実行できます。
 
-以下の通り実装することで、TapyrusAPI のトークンの新規発行 API を実行できます。
+編集対象のファイルは `lib/utils/tapyrus_api.rb` です。
 
 ```ruby
 def post_tokens_issue(amount:, token_type: 1, split: 1)
@@ -94,20 +95,44 @@ def post_tokens_issue(amount:, token_type: 1, split: 1)
 end
 ```
 
+TapyrusAPI は REST API なので、最初の `res = instance.connection.post("/api/v1/tokens/issue") do |req|` で TapyrusAPI のトークンの新規発行のエンドポイントを呼び出しています。
+
+次の行の `req.headers['Authorization'] = "Bearer #{instance.access_token}"` は TapyrusAPI へアクセスするためのアクセストークンを指定しています。
+
+TapyrusAPI ではアクセストークン毎に wallet が作成されていますので、これはトークンを新規発行する対象の wallet を指定していることでもあります。
+
+次の２行では、トークンの新規発行のエンドポイントに必要なパラメータを指定しています。
+
+```ruby
+    req.headers['Content-Type'] = 'application/json'
+    req.body = JSON.generate({ "amount" => amount, "token_type" => token_type, "split" => split })
+```
+
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/issueToken
+
+ドキュメントにも記載がある通り、TapyrusAPI では以下の 3 種類のトークンが発行可能です。
+
+1. 再発行可能なトークン
+2. 再発行不可能なトークン
+3. NFT
+
 実装したら早速ブラウザで確認してみましょう。
 
 [コンテナを更新](#22-アプリケーションを起動する)して http://localhost:3000/tokens/new にアクセスしてみましょう。
 
+今回は、再発行可能トークンを 100 発行してみます。次の通り指定して実行してみましょう。
 `Amount` には `100` を、 `Token Type` には `再発行可能トークン` を、 `Split` には `10` を入力して `BCに記録` を押してみましょう。
 
 ### 1.2. トークンの確認
 
 トークンを作成したら今持っているトークンの量が気になりますよね。
 
-そしたら次は、トークンの総量取得 API を実装しましょう。
-`lib/utils/tapyrus_api.rb` の `get_tokens` メソッドを実装しましょう。
+次は、トークンの総量取得 API を実装しましょう。
+`TapyrusApi` クラスの `get_tokens` メソッドを実装します。
 
 以下の通り実装することで、TapyrusAPI のトークンの総量取得 API を実行できます。
+
+編集対象のファイルは `lib/utils/tapyrus_api.rb` です。
 
 ```ruby
 def get_tokens(confirmation_only = true)
@@ -120,15 +145,18 @@ def get_tokens(confirmation_only = true)
 end
 ```
 
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/getTokens
+
 [コンテナを更新](#22-アプリケーションを起動する)して http://localhost:3000/tokens にアクセスしてみましょう。
 
 ### 1.3. トークンの送付
 
 最後に作成したトークンを誰かに送ってみましょう。
 
-`lib/utils/tapyrus_api.rb` の `put_tokens_transfer` メソッドを実装しましょう。
-
+`TapyrusApi` クラスの `put_tokens_transfer` メソッドを実装しましょう。
 以下の通り実装することで、TapyrusAPI のトークンの送付 API を実行できます。
+
+編集対象のファイルは `lib/utils/tapyrus_api.rb` です。
 
 ```ruby
 def put_tokens_transfer(token_id, address:, amount:)
@@ -142,11 +170,13 @@ def put_tokens_transfer(token_id, address:, amount:)
 end
 ```
 
-送り先のアドレスが必要になります。
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/transferToken
 
-アドレスがない場合は `lib/utils/tapyrus_api.rb` の `post_addresses` メソッドを実装しましょう。
+また、送り先のアドレスが必要になります。
 
-以下の通り実装して、API を実行することで作成できます。
+アドレスがない場合は `TapyrusApi` クラスの `post_addresses` メソッドを実装しましょう。
+
+以下の通り実装することで、TapyrusAPI のアドレスの生成 API を実行できます。
 
 ```ruby
 def post_addresses(purpose: "general")
@@ -160,7 +190,9 @@ def post_addresses(purpose: "general")
 end
 ```
 
-また、作成したアドレスは `lib/utils/tapyrus_api.rb` の `get_addresses` メソッドを実装して API を実行することで確認できます。
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。 https://doc.api.tapyrus.chaintope.com/#tag/address/operation/createAddress
+
+作成したアドレスは `TapyrusApi` クラスの `get_addresses` メソッドを実装することで確認できるようになります。
 
 ```ruby
 def get_addresses(per: 25, page: 1, purpose: "general")
@@ -174,6 +206,9 @@ def get_addresses(per: 25, page: 1, purpose: "general")
   res.body
 end
 ```
+
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。
+https://doc.api.tapyrus.chaintope.com/#tag/address/operation/getAddresses
 
 [コンテナを更新](#22-アプリケーションを起動する)して http://localhost:3000/wallets にアクセスしてみましょう。
 
