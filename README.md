@@ -34,7 +34,11 @@ TapyrusAPI のクライアント証明書は API 利用のための認証情報�
 
 ### 1.3. TapyrusAPI エンドポイント
 
-`lib/utils/tapyrus_api.rb` の 2 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を書いてください。
+`lib/utils/tapyrus_api.rb` の 2 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。
+
+```ruby
+TAPYRUS_API_ENDPOINT_URL = "https://yzjwv84b.api.tapyrus.chaintope.com"
+```
 
 ## 2. 実行環境を起動する
 
@@ -81,20 +85,22 @@ docker compose down -v --remove-orphans
 
 Rake タスクを実行して TapyrusAPI を実行できるようにしてみましょう。
 
-1. TapyrusAPIへの接続を確認する
+1. TapyrusAPI への接続を確認する
 
-まずは、TapyrusAPIに接続できるかを確認します。以下のコマンドを実行して、addressの一覧を取得してみましょう。
+まずは、TapyrusAPI に接続できるかを確認します。以下のコマンドを実行して、address の一覧を取得してみましょう。
+
 ```bash
 docker compose exec web bin/rails api:get_addresses
 ```
 
 最初はアドレスが存在していないため、以下のような結果が表示されます。
 すでにアドレスを発行済みの場合は、アドレスの一覧が表示されます。
+
 ```ruby
 {:count=>0, :addresses=>[]}
 ```
 
-コマンド実行時に、エラーメッセージが表示される場合は、TapyrusAPIへのURLの設定、もしくはクライアント証明書の配置が正しくない可能性があるので、設定内容を見直してください。
+コマンド実行時に、エラーメッセージが表示される場合は、TapyrusAPI への URL の設定、もしくはクライアント証明書の配置が正しくない可能性があるので、設定内容を見直してください。
 
 2. アドレスを作成する
 
@@ -122,21 +128,21 @@ def post_addresses(purpose: "general")
 end
 ```
 
-TapyrusAPIはREST APIなので、最初の `res = instance.connection.post("/api/v1/addresses") do |req|` でTapyrusAPIのアドレス発行のエンドポイントを呼び出しています。
+TapyrusAPI は REST API なので、最初の `res = instance.connection.post("/api/v1/addresses") do |req|` で TapyrusAPI のアドレス発行のエンドポイントを呼び出しています。
 
-次の行の `req.headers['Authorization'] = "Bearer #{instance.access_token}"` はTapyrusAPIへアクセスするためのアクセストークンを指定しています。
+次の行の `req.headers['Authorization'] = "Bearer #{instance.access_token}"` は TapyrusAPI へアクセスするためのアクセストークンを指定しています。
 
-TapyrusAPIではアクセストークン毎にwalletが作成されていますので、これはアドレスを新規作成する対象のwalletを指定していることでもあります。
+TapyrusAPI ではアクセストークン毎に wallet が作成されていますので、これはアドレスを新規作成する対象の wallet を指定していることでもあります。
 
 次の２行では、アドレス新規作成のエンドポイントに必要なパラメータを指定しています。
+
 ```ruby
     req.headers['Content-Type'] = 'application/json'
     req.body = JSON.generate({ "purpose" => purpose })
 ```
 
-これらのコードは、TapyrusAPIの次の機能を呼び出しています。
+これらのコードは、TapyrusAPI の次の機能を呼び出しています。
 https://doc.api.tapyrus.chaintope.com/#tag/address/operation/createAddress
-
 
 これでアドレスを新規作成できるようになりました。以下のコマンドを実行してアドレスを作成しましょう。
 
@@ -150,8 +156,7 @@ docker compose exec web bin/rails api:post_addresses
 "13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT"
 ```
 
-
-3トークンを新規発行する
+3 トークンを新規発行する
 
 以下のコマンドでトークンを発行できるように実装してみましょう。
 
@@ -177,38 +182,36 @@ def post_tokens_issue(amount:, token_type: 1, split: 1)
 end
 ```
 
-
-これらのコードは、先程と同様にTapyrusAPIのトークン新規発行機能を呼び出すものです。
+これらのコードは、先程と同様に TapyrusAPI のトークン新規発行機能を呼び出すものです。
 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/issueToken
 
-ドキュメントにも記載がある通り、TapyrusAPIでは以下の3種類のトークンが発行可能です。
+ドキュメントにも記載がある通り、TapyrusAPI では以下の 3 種類のトークンが発行可能です。
 
 1. 再発行可能なトークン
 2. 再発行不可能なトークン
 3. NFT
 
-今回は、token_typeに1を指定して、再発行可能なトークンを発行します。
+今回は、token_type に 1 を指定して、再発行可能なトークンを発行します。
 それでは、以下のコマンドを実行してトークンを発行しましょう。
 
 ```bash
 docker compose exec web bin/rails api:post_tokens_issue'[100,1,10]'
 ```
 
-実行結果として以下のように、新規発行されたトークンのIDとトークン新規発行のために発行されたtransactionのidが表示されれば、正しく実装できています。
+実行結果として以下のように、新規発行されたトークンの ID とトークン新規発行のために発行された transaction の id が表示されれば、正しく実装できています。
 
 ```ruby
 {:token_id=>"c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c", :txid=>"a3d9c914655707240cb80757b7a377f8f741d6455bc4f6baba2645d49ff1edb0"}
 ```
 
-このトークンは、再発行が可能なのでTapyrusAPIのトークンの再発行機能を呼び出すことで、追加発行が可能です。
+このトークンは、再発行が可能なので TapyrusAPI のトークンの再発行機能を呼び出すことで、追加発行が可能です。
 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/reissueToken
 
-token_typeに2を指定すると、再発行不可能なトークンとなるため、総量が固定され追加発行はできなくなります。
+token_type に 2 を指定すると、再発行不可能なトークンとなるため、総量が固定され追加発行はできなくなります。
 
-token_typeを3にするとNFTとなるため、トークンの発行数は常に1になります。
+token_type を 3 にすると NFT となるため、トークンの発行数は常に 1 になります。
 
-
-4トークンを送付する
+4 トークンを送付する
 
 以下のコマンドでトークンを送付できるように実装してみましょう。
 
@@ -234,26 +237,27 @@ def put_tokens_transfer(token_id, address:, amount:)
 end
 ```
 
-これらのコードは、先程と同様にTapyrusAPIのトークンの送付機能を呼び出すものです。
+これらのコードは、先程と同様に TapyrusAPI のトークンの送付機能を呼び出すものです。
 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/transferToken
 
-4行目の、`req.body = JSON.generate({ "address" => address, "amount" => amount })` で、トークンを送付する相手のaddressと、送付する数量をパラメータに指定しています。
+4 行目の、`req.body = JSON.generate({ "address" => address, "amount" => amount })` で、トークンを送付する相手の address と、送付する数量をパラメータに指定しています。
 
 これでコマンドが実行できるようになりました。以下のコマンドを実行してトークンを発行しましょう。
 `<token_id>` は 2. で発行したトークンの `token_id` を、 `<address>` は 1. で作成した自分もしくは他人のアドレスを、 `<amount>` は 2. で発行したトークンの量 (100) 以下の値を指定します。
 
-例えば、送付するトークンのIDが`c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c`、送付先のアドレスが `13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT`、送付する数量が50の場合は以下のコマンドになります。
+例えば、送付するトークンの ID が`c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c`、送付先のアドレスが `13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT`、送付する数量が 50 の場合は以下のコマンドになります。
 
 ```bash
 docker compose exec web bin/rails api:put_tokens_transfer'[c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c,13aV8XCYZDQvPFEDFoYrE69qizYWJpPrpT,50]'
 ```
 
-実行結果として以下のように、新規発行されたトークンのIDとトークンを送付するtransactionのidが表示されれば、正しく実装できています。
+実行結果として以下のように、新規発行されたトークンの ID とトークンを送付する transaction の id が表示されれば、正しく実装できています。
+
 ```ruby
 {:token_id=>"c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c", :txid=>"33ed4f17ea85746256225eaaebd7d7d7c45337bfc80081b01cb9a2af4da5672a"}
 ```
 
-5トークンを確認する
+5 トークンを確認する
 
 以下のコマンドでトークンを確認できるように実装してみましょう。
 
@@ -276,7 +280,7 @@ def get_tokens(confirmation_only = true)
 end
 ```
 
-これらのコードは、TapyrusAPIのトークンの総量取得機能を呼び出すものです。
+これらのコードは、TapyrusAPI のトークンの総量取得機能を呼び出すものです。
 https://doc.api.tapyrus.chaintope.com/#tag/token/operation/getTokens
 
 これでコマンドが実行できるようになりました。以下のコマンドを実行してトークンを確認しましょう。
@@ -287,7 +291,8 @@ https://doc.api.tapyrus.chaintope.com/#tag/token/operation/getTokens
 docker compose exec web bin/rails api:get_tokens
 ```
 
-以下のように、所持しているトークンのIDと総量が表示されれば、正しく実装できています。
+以下のように、所持しているトークンの ID と総量が表示されれば、正しく実装できています。
+
 ```ruby
 [{:token_id=>"c154fb27bbb2c91c1eec9357032cf029e0bf6257b429a427d5587504b3c85ca11c", :amount=>100}]
 ```
