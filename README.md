@@ -34,7 +34,11 @@ TapyrusAPI のクライアント証明書は API 利用のための認証情報�
 
 ### 1.3. TapyrusAPI エンドポイント
 
-`lib/utils/tapyrus_api.rb` の 2 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を書いてください。
+`lib/utils/tapyrus_api.rb` の 2 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。
+
+```ruby
+TAPYRUS_API_ENDPOINT_URL = "https://yzjwv84b.api.tapyrus.chaintope.com"
+```
 
 ## 2. Web App を起動する
 
