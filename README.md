@@ -20,21 +20,21 @@
 |-- tapyrus_api_client.pem
 ```
 
-### 1.1. アクセストークン
-
-Google ドライブで共有する `access_token.txt` を `workshop202207` ディレクトリに置きます。
-
-TapyrusAPI のアクセストークンはそれぞれのウォレットを識別する情報であり、また API 利用のための認証情報でもあります。
-
-### 1.2. クライアント証明書
+### 1.1. クライアント証明書
 
 Google ドライブで共有する `tapyrus_api_client.pem` を `workshop202207` ディレクトリに置きます。
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
 
+### 1.2. アクセストークン
+
+`lib/utils/tapyrus_api.rb` の 2 行目にある `ACCESS_TOKEN = 'ここにアクセストークンを記入してください'` の部分に 教えてもらったアクセストークンを書いてください。
+
+TapyrusAPI のアクセストークンはそれぞれのウォレットを識別する情報であり、また API 利用のための認証情報でもあります。
+
 ### 1.3. TapyrusAPI エンドポイント
 
-`lib/utils/tapyrus_api.rb` の 2 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。
+`lib/utils/tapyrus_api.rb` の 3 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。
 
 ```ruby
 TAPYRUS_API_ENDPOINT_URL = "https://yzjwv84b.api.tapyrus.chaintope.com"

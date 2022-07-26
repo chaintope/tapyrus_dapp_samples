@@ -1,6 +1,6 @@
 # ワークで実装
-TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
-ACCESS_TOKEN = "ここにアクセストークンを記入してください"
+ACCESS_TOKEN = 'ここにアクセストークンを記入してください'
+TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'
 
 class TapyrusApi
   include Singleton
