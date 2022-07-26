@@ -1,5 +1,5 @@
 # ワークで実装
-TAPYRUS_API_ENDPOINT_URL = "https://p4h2xize.api.tapyrus.chaintope.com"
+TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
 
 class TapyrusApi
   include Singleton
@@ -108,20 +108,20 @@ class TapyrusApi
   end
 
   def client_cert
-    OpenSSL::X509::Certificate.new File.read(client_pem_path)
+    OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').certificate
   rescue Errno::ENOENT => e
     Rails.logger.error(e)
     raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
   def client_key
-    OpenSSL::PKey.read File.read(client_pem_path)
+    OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').key
   rescue Errno::ENOENT => e
     Rails.logger.error(e)
     raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
-  def client_pem_path
-    Rails.root.join("tapyrus_api_client.pem")
+  def load_client_cert_p12
+    File.read(Rails.root.join("tapyrus_api_client_cert_2022-07-26.p12"))
   end
 end
