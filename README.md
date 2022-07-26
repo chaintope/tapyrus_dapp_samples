@@ -22,7 +22,7 @@
 
 ### 1.1. クライアント証明書
 
-Google ドライブで共有する `tapyrus_api_client.pem` を `workshop202207` ディレクトリに置きます。
+Google ドライブで共有する `tapyrus_api_client_cert_2022-07-26.p12` を `workshop202207` ディレクトリに置きます。
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
 
