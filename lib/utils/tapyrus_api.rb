@@ -1,5 +1,6 @@
 # ワークで実装
 TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
+ACCESS_TOKEN = "ここにアクセストークンを記入してください"
 
 class TapyrusApi
   include Singleton
@@ -84,7 +85,7 @@ class TapyrusApi
   attr_reader :connection, :access_token, :url
 
   def initialize
-    load_access_token
+    @access_token = ACCESS_TOKEN
     @url = TAPYRUS_API_ENDPOINT_URL
 
     raise TapyrusApi::UrlNotFound, "接続先URLが正しくありません" if URI::DEFAULT_PARSER.make_regexp.match(@url).blank?
@@ -97,15 +98,6 @@ class TapyrusApi
   end
 
   private
-
-  def load_access_token
-    if File.exist?(Rails.root.join("access_token.txt"))
-      @access_token = File.read(Rails.root.join("access_token.txt"))
-    else
-      Rails.logger.warn("Not Found Access Token")
-      @access_token = nil
-    end
-  end
 
   def client_cert
     OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').certificate
