@@ -11,6 +11,10 @@ class TapyrusApi
   class << self
     def get_addresses(per: 25, page: 1, purpose: "general")
       # ワーク1.3.で実装
+      return {
+        "addresses": ["未実装です", "未実装です"],
+        "count": 2
+      }
     end
 
     def post_addresses(purpose: "general")
@@ -20,6 +24,10 @@ class TapyrusApi
     def get_userinfo(confirmation_only = true)
       # http://localhost:3000 で使用している。
       # 応用編として実装してみよう。
+      return {
+        sub: "未実装です。",
+        addresses: ["未実装です。"]
+      }
     end
 
     def get_timestamps
@@ -36,6 +44,13 @@ class TapyrusApi
 
     def get_tokens(confirmation_only = true)
       # ワーク1.2.で実装
+      return [
+        {
+          token_id: "未実装です",
+          amount: 0
+        }
+
+      ]
     end
 
     def post_tokens_issue(amount:, token_type: 1, split: 1)
