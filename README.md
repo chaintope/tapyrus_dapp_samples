@@ -6,8 +6,7 @@
 
 ## 1. TapyrusAPI の準備
 
-以下の 2 つの設定ファイルを配置してください。
-
+クライアント証明書のPKCS12ファイルを配置します。
 階層は以下のようになります。
 
 ```
@@ -16,21 +15,19 @@
 |-- bin
 |-- config
 ....
-|-- access_token.txt
-|-- tapyrus_api_client.pem
+|-- tapyrus_api_client_cert_2022-07-26.p12
 ```
+### 1.1. クライアント証明書
 
-### 1.1. アクセストークン
-
-Google ドライブで共有する `access_token.txt` を `workshop202207` ディレクトリに置きます。
-
-TapyrusAPI のアクセストークンはそれぞれのウォレットを識別する情報であり、また API 利用のための認証情報でもあります。
-
-### 1.2. クライアント証明書
-
-Google ドライブで共有する `tapyrus_api_client.pem` を `workshop202207` ディレクトリに置きます。
+Google ドライブで共有する `tapyrus_api_client_cert_2022-07-26.p12` を `workshop202207` ディレクトリに置きます。
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
+
+### 1.2. アクセストークン
+
+`lib/utils/tapyrus_api.rb` の 2 行目にある `ACCESS_TOKEN = 'ここにアクセストークンを記入してください'` の部分に 教えてもらったアクセストークンを書いてください。
+
+TapyrusAPI のアクセストークンはそれぞれのウォレットを識別する情報であり、また API 利用のための認証情報でもあります。
 
 ### 1.3. TapyrusAPI エンドポイント
 
@@ -44,15 +41,13 @@ TAPYRUS_API_ENDPOINT_URL = "https://yzjwv84b.api.tapyrus.chaintope.com"
 
 Docker で用意された環境を起動します。
 
-起動したら `http://localhost:3000` にアクセスすることでアプリケーションを使用できます。
-
 ### 2.1. データベースを作成する
 
 初回起動時はデータベースがないため作成する必要があります。
 以下のコマンドを実行しデータベースを作成します。
 
 ```
-docker compose run --rm web db:create
+docker compose run --rm web bin/rails db:create
 ```
 
 ### 2.2. アプリケーションを起動する
@@ -61,11 +56,14 @@ docker compose run --rm web db:create
 docker compose up -d --build
 ```
 
+起動したら `http://localhost:3000` にアクセスすることでアプリケーションを使用できます。
+
 ### 2.3. Docker コンテナとデータベースを削除する
 
-Docker にまつわるデータを削除できます。
+このコマンドは環境を再構築したい場合に実行してください。
+Dockerのコンテナなど構築した環境を全て削除します。
 
-TapyrusAPI を使ってブロックチェーンに書き込んだトランザクションは消えません。
+なお、TapyrusAPI を使ってブロックチェーンに書き込んだトランザクションは消えません。
 
 ```
 docker compose down -v --remove-orphans
