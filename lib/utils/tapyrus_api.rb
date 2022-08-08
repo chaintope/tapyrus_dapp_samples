@@ -12,7 +12,7 @@ class TapyrusApi
     def get_addresses(per: 25, page: 1, purpose: "general")
       # ワーク1.3.で実装
       return {
-        "addresses": ["未実装です", "未実装です"],
+        "addresses": ["** まだ未実装です。機能を実装してください。 **", "** 未実装です。機能を実装してください。 **"],
         "count": 2
       }
     end
@@ -25,8 +25,8 @@ class TapyrusApi
       # http://localhost:3000 で使用している。
       # 応用編として実装してみよう。
       return {
-        sub: "未実装です。",
-        addresses: ["未実装です。"]
+        sub: "** まだ未実装です。機能を実装してください。 **",
+        addresses: ["** まだ未実装です。機能を実装してください。 **"]
       }
     end
 
@@ -46,7 +46,7 @@ class TapyrusApi
       # ワーク1.2.で実装
       return [
         {
-          token_id: "未実装です",
+          token_id: "** まだ未実装です。機能を実装してください。 **",
           amount: 0
         }
 
