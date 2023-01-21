@@ -9,6 +9,21 @@ class TapyrusApi
   class UrlNotFound < StandardError; end
 
   class << self
+    def get_tokens(confirmation_only = true)
+      # ワーク1.1.で実装
+      return [
+        {
+          token_id: "** まだ未実装です。機能を実装してください。 **",
+          amount: 0
+        }
+
+      ]
+    end
+
+    def post_tokens_issue(amount:, token_type: 1, split: 1)
+      # ワーク1.2.で実装
+    end
+
     def get_addresses(per: 25, page: 1, purpose: "general")
       # ワーク1.3.で実装
       return {
@@ -18,7 +33,11 @@ class TapyrusApi
     end
 
     def post_addresses(purpose: "general")
-      # ワーク1.3.で実装
+      # ワーク1.4.で実装
+    end
+
+    def put_tokens_transfer(token_id, address:, amount:)
+      # ワーク1.5.で実装
     end
 
     def get_userinfo(confirmation_only = true)
@@ -40,25 +59,6 @@ class TapyrusApi
 
     def post_timestamp(content:, digest:, prefix:, type:)
       # Additional Task で実装
-    end
-
-    def get_tokens(confirmation_only = true)
-      # ワーク1.2.で実装
-      return [
-        {
-          token_id: "** まだ未実装です。機能を実装してください。 **",
-          amount: 0
-        }
-
-      ]
-    end
-
-    def post_tokens_issue(amount:, token_type: 1, split: 1)
-      # ワーク1.1.で実装
-    end
-
-    def put_tokens_transfer(token_id, address:, amount:)
-      # ワーク1.3.で実装
     end
   end
 
