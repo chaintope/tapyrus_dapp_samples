@@ -114,6 +114,6 @@ class TapyrusApi
   end
 
   def load_client_cert_p12
-    File.read(Rails.root.join("tapyrus_api_client_cert_2022-07-26.p12"))
+    File.read(Rails.root.join("tapyrus_api_client_cert.p12"))
   end
 end

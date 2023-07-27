@@ -1,6 +1,6 @@
 # README
 
-2022 年に実施の B3 のワークショップで用いるサンプルコード
+B3 のワークショップで用いるサンプルコード
 
 # 起動手順
 
@@ -10,16 +10,16 @@
 階層は以下のようになります。
 
 ```
-- workshop202207
+- workshop
 |-- app
 |-- bin
 |-- config
 ....
-|-- tapyrus_api_client_cert_2022-07-26.p12
+|-- tapyrus_api_client_cert.p12
 ```
 ### 1.1. クライアント証明書
 
-Google ドライブで共有する `tapyrus_api_client_cert_2022-07-26.p12` を `workshop202207` ディレクトリに置きます。
+Google ドライブで共有する `tapyrus_api_client_cert.p12` を `workshop` ディレクトリに置きます。
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
 
@@ -31,7 +31,8 @@ TapyrusAPI のアクセストークンはそれぞれのウォレットを識別
 
 ### 1.3. TapyrusAPI エンドポイント
 
-`lib/utils/tapyrus_api.rb` の 3 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。
+`lib/utils/tapyrus_api.rb` の 3 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。 
+エンドポイントは当日Discord、Zoom等でお知らせします。
 
 ```ruby
 TAPYRUS_API_ENDPOINT_URL = "https://yzjwv84b.api.tapyrus.chaintope.com"
@@ -247,6 +248,3 @@ http://localhost:3000/tokens にアクセスして確認してみましょう。
 
 以上でトークンの送付と確認のワークは終了になります。
 
-## Addtional Task
-
-[web-ui-timestamp](https://github.com/chaintope/workshop202207/tree/web-ui-timestamp) ブランチをチェックアウトしてタイムスタンプの表示と記録を実装してみよう。

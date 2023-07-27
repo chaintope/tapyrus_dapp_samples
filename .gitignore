@@ -36,3 +36,5 @@ vendor/bundle
 access_token.txt
 endpoint.txt
 tapyrus_api_client.pem
+
+*.p12
