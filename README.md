@@ -54,7 +54,7 @@ docker compose run --rm web bin/rails db:create
 ### 2.2. アプリケーションを起動する
 
 ```
-docker compose up -d --build
+docker compose up --build
 ```
 
 起動したら `http://localhost:3000` にアクセスすることでアプリケーションを使用できます。
