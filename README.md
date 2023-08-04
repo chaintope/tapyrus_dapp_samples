@@ -23,20 +23,14 @@ Google ドライブで共有する `tapyrus_api_client_cert.p12` を `workshop` 
 
 TapyrusAPI のクライアント証明書は API 利用のための認証情報になります。
 
-### 1.2. アクセストークン
+### 1.2. アクセストークン, TapyrusAPI エンドポイント, クライアント証明書のパスフレーズ
 
-`lib/utils/tapyrus_api.rb` の 2 行目にある `ACCESS_TOKEN = 'ここにアクセストークンを記入してください'` の部分に 教えてもらったアクセストークンを書いてください。
-
-TapyrusAPI のアクセストークンはそれぞれのウォレットを識別する情報であり、また API 利用のための認証情報でもあります。
-
-### 1.3. TapyrusAPI エンドポイント
-
-`lib/utils/tapyrus_api.rb` の 3 行目にある `TAPYRUS_API_ENDPOINT_URL = 'ここにURLを記入してください'` の部分に TapyrusAPI エンドポイントの URL を以下のように書いてください。 
-エンドポイントは当日Discord、Zoom等でお知らせします。
-
-```ruby
-TAPYRUS_API_ENDPOINT_URL = "https://yzjwv84b.api.tapyrus.chaintope.com"
+```bash
+cp .env.sample .env
 ```
+
+`.env`ファイルを編集します。  
+アクセストークン, TapyrusAPI エンドポイント, クライアント証明書のパスフレーズはハンズオン時にお伝えします。  
 
 ## 2. Web App を起動する
 

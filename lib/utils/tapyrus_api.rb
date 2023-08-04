@@ -1,7 +1,3 @@
-# ワークで実装
-ACCESS_TOKEN = "ここにアクセストークンを記入してください"
-TAPYRUS_API_ENDPOINT_URL = "ここにURLを記入してください"
-
 class TapyrusApi
   include Singleton
 
@@ -86,8 +82,8 @@ class TapyrusApi
   attr_reader :connection, :access_token, :url
 
   def initialize
-    @access_token = ACCESS_TOKEN
-    @url = TAPYRUS_API_ENDPOINT_URL
+    @access_token = ENV['ACCESS_TOKEN']
+    @url = ENV['TAPYRUS_API_ENDPOINT_URL']
     raise TapyrusApi::UrlNotFound, "接続先URLが正しくありません" if URI::DEFAULT_PARSER.make_regexp.match(@url).blank?
     @connection ||= Faraday.new(@url) do |builder|
       builder.response :raise_error
@@ -100,14 +96,14 @@ class TapyrusApi
   private
 
   def client_cert
-    OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').certificate
+    OpenSSL::PKCS12.new(load_client_cert_p12, ENV['PKCS_12_PASS']).certificate
   rescue Errno::ENOENT => e
     Rails.logger.error(e)
     raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
   end
 
   def client_key
-    OpenSSL::PKCS12.new(load_client_cert_p12, 'b3workshop').key
+    OpenSSL::PKCS12.new(load_client_cert_p12, ENV['PKCS_12_PASS']).key
   rescue Errno::ENOENT => e
     Rails.logger.error(e)
     raise TapyrusApi::FileNotFound, 'クライアント証明書がありません'
