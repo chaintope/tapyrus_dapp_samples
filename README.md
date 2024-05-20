@@ -4,6 +4,23 @@ B3 のワークショップで用いるサンプルコード
 
 # 起動手順
 
+
+## 0. リポジトリの準備
+
+
+リモートリポジトリをcloneします。
+
+```
+git clone https://github.com/haw/workshop.git
+```
+
+リポジトリに入ってワークショップのブランチをcheckoutする
+```
+cd workshop
+git checkout -b cli origin/workshop20xx (※20xxの部分は年度毎に変更)
+git status でブランチがworkshop20xx であることを確認
+```
+
 ## 1. TapyrusAPI の準備
 
 クライアント証明書のPKCS12ファイルを配置します。
@@ -38,9 +55,9 @@ Docker で用意された環境を起動します。
 
 ### 2.1. データベースを作成する
 
-初回起動時はデータベースがないため作成する必要があります。
-以下のコマンドを実行しデータベースを作成します。
-
+- 初回起動時はデータベースがないため作成する必要があります。
+- 以下のコマンドを実行しデータベースを作成します。
+- ※WSL 2(Ubuntu)の人はdockerコマンドには sudo をつける
 ```
 docker compose run --rm web bin/rails db:create
 ```
@@ -51,7 +68,10 @@ docker compose run --rm web bin/rails db:create
 docker compose up --build
 ```
 
+
 起動したら `http://localhost:3000` にアクセスすることでアプリケーションを使用できます。
+
+ ※サーバー実行中は操作出来なくなるので、コマンド作業を続ける時は別のターミナルを開く
 
 ### 2.3. Docker コンテナとデータベースを削除する
 
