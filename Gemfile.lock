@@ -78,7 +78,7 @@ GEM
     builder (3.2.4)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
-    date (3.3.3)
+    date (3.4.1)
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -150,12 +150,12 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     multipart-post (2.3.0)
-    net-imap (0.3.7)
+    net-imap (0.3.8)
       date
       net-protocol
     net-pop (0.1.2)
       net-protocol
-    net-protocol (0.2.1)
+    net-protocol (0.2.2)
       timeout
     net-smtp (0.4.0)
       net-protocol
@@ -228,7 +228,7 @@ GEM
     stringio (3.0.8)
     thor (1.2.2)
     tilt (2.3.0)
-    timeout (0.4.0)
+    timeout (0.4.3)
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
